@@ -1,2 +1,9 @@
 # Dependency directories
 node_modules/
+
+# ignore
+server/handle
+server/area-code
+server/2020
+front
+addCode.js
