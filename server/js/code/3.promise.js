@@ -201,3 +201,5 @@ p1.then(res => {
     setTimeout(() => { resolve(2); console.timeEnd('b'); }, 2000)
   });
 }).then(res => console.log('then 2:', res));
+
+// 5. async 和 await
