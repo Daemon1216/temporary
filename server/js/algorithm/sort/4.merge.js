@@ -6,6 +6,7 @@ function main() {
   console.log('排序后：', arr);
 }
 
+// 合并法一：改变原数组
 function sortFun1(arr, l, r, mid) {
   var tmpArr = []; // 临时数组用于缓存[待排序子数组]
   for (var k = l; k <= r; k++) {
@@ -33,6 +34,7 @@ function sortFun1(arr, l, r, mid) {
   }
 }
 
+// 合并法二：新有序数组
 function sortFun2(arr, l, r, mid) {
   var tmpArr = []; // 往临时数据插排好序的值
   var i = l;
