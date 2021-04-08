@@ -8,25 +8,26 @@ function main() {
   var arr = [8, 2, 6, 3, 1, 5, 7, 4];
   var l = 0;
   var r = arr.length - 1;
-  // quickSort1Way(arr, 1, r);
+  // quickSort1Way(arr, l, r);
   // quickSort2Way(arr, l, r);
   quickSort3Way(arr, l, r);
   console.log('排序后：', arr);
 }
 
+// 普通快排：算法原理：找到分界点位置，并把小于基准值的数交换至分界点左侧
 function quickSort1Way(arr, l, r) {
   if (l < r) {
     swap(arr, l, Math.floor(Math.random() * (r - l + 1)) + l); // 取随机数为基准值
     var eV = arr[l]; // 基准值
-    
-    // 数组分为 eV, < eV（[l, j]）, > eV（[j+1, i]） 三部分，令 i 为当前索引，j 为 <eV 和 >eV 的分界点；当当前索引值>eV时，分界点后移
+    // 数组分为 eV, < eV（[l, j]）, > eV（[j+1, i]） 三部分，令 i 为当前索引，j 为 <eV 和 >eV 的分界点
     var i = l + 1;
     var j = l;
     while(i <= r) {
-      if (arr[i] > eV) {
-        swap(arr, i, ++j); // ++j: j为分界点
+      if (arr[i] < eV) {
+        swap(arr, i++, ++j); // ++j: j为分界点
+      } else {
+        i++;
       }
-      i++;
     }
     swap(arr, l, j);
     quickSort1Way(arr, l, j - 1);
@@ -66,7 +67,7 @@ function quickSort2Way(arr, l, r) {
 // 初始化时，小于区域在l左边一位，大于区域在r的右边一位，当前位置为i=l；当i<基准值时，i与小于区域右边一位交换（小于区域增加一位），i右移继续比较；当等于基准值时，i直接右移；当大于基准值时，i与大于区域左边一位交换（大于区域增加一位），i不移动，因为交换到i的值大小未知，需要进入下一轮循环比较
 function quickSort3Way(arr, l, r) {
   if (l < r) {
-    // swap(arr, l, Math.floor(Math.random() * (r - l + 1)) + l); // 取随机数为基准值
+    swap(arr, l, Math.floor(Math.random() * (r - l + 1)) + l); // 取随机数为基准值
     var eV = arr[l]; // 令中间相同值为arr[l]
 
     var lt = l - 1; // 小于区域右闭边界
