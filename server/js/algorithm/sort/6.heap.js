@@ -22,39 +22,38 @@
   arr[idxR] = tmp;
 }
 
-function buildheap(arr) {
-  var i = arr.length / 2 - 1;
+function buildheap(arr, curLen) {
+  var i = Math.floor(curLen / 2) - 1;
   // 构建大顶堆
   while(i >= 0) {
     // 调整大顶堆
-    heapAdjust(arr, i);
+    heapAdjust(arr, i, curLen);
     i--;
   }
 }
 
-function heapAdjust(arr, cur) {
+function heapAdjust(arr, cur, curLen) {
   var l = cur * 2 + 1;
   var r = cur * 2 + 2;
   var max = cur;
-  if (l < len && arr[cur] < arr[l]) {
+  if (l < curLen && arr[cur] < arr[l]) {
     max = l;
   }
-  if (r < len && arr[cur] < arr[r]) {
+  if (r < curLen && arr[cur] < arr[r]) {
     max = r;
   }
   if (cur != max) {
     swap(arr, cur, max);
-    heapAdjust(arr, max); // 每次构建大顶堆时，如果父节点发生交换，子节点需要重新调整
+    heapAdjust(arr, max, curLen); // 每次构建大顶堆时，如果父节点发生交换，子节点需要重新调整
   }
 }
 
 function heapSort() {
   var arr = [8, 2, 6, 3, 1, 5, 7, 4];
-  len = arr.length - 1;
-  buildheap(arr);
-  while(len > 0) {
+  var len = arr.length - 1;
+  while(len > 1) {
+    buildheap(arr, len); // 仅第一轮
     swap(arr, 0, len--);
-    heapAdjust(arr, 0);
   }
   console.log('排序后：', arr);
 }
