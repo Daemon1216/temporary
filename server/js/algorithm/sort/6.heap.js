@@ -22,38 +22,39 @@
   arr[idxR] = tmp;
 }
 
-function buildheap(arr, curLen) {
-  var i = Math.floor(curLen / 2) - 1;
+function buildheap(arr, heapLen) {
+  var i = Math.floor(heapLen / 2) - 1;
   // 构建大顶堆
   while(i >= 0) {
     // 调整大顶堆
-    heapAdjust(arr, i, curLen);
+    heapAdjust(arr, i, heapLen);
     i--;
   }
 }
 
-function heapAdjust(arr, cur, curLen) {
+function heapAdjust(arr, cur, heapLen) {
   var l = cur * 2 + 1;
   var r = cur * 2 + 2;
   var max = cur;
-  if (l < curLen && arr[cur] < arr[l]) {
+  var maxIndex = heapLen - 1; // 注意，最末元素下标 = 长度-1
+  if (l < maxIndex && arr[cur] < arr[l]) {
     max = l;
   }
-  if (r < curLen && arr[cur] < arr[r]) {
+  if (r < maxIndex && arr[cur] < arr[r]) {
     max = r;
   }
   if (cur != max) {
     swap(arr, cur, max);
-    heapAdjust(arr, max, curLen); // 每次构建大顶堆时，如果父节点发生交换，子节点需要重新调整
+    heapAdjust(arr, max, heapLen); // 每次构建大顶堆时，如果父节点发生交换，子节点需要重新调整
   }
 }
 
 function heapSort() {
   var arr = [8, 2, 6, 3, 1, 5, 7, 4];
-  var len = arr.length - 1;
-  while(len > 1) {
-    buildheap(arr, len); // 仅第一轮
-    swap(arr, 0, len--);
+  var heapLen = arr.length;
+  while(heapLen >= 3) { // 至少3个才需要构建
+    buildheap(arr, heapLen);
+    swap(arr, 0, --heapLen); // 每一次构建完大顶堆后，需要交换大顶堆的首尾；交换后，需要再次构建大顶堆的数组在大顶堆基础上，少了最末元素
   }
   console.log('排序后：', arr);
 }
