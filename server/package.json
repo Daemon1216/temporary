@@ -1,0 +1,8 @@
+{
+    "name": "xxx",
+    "version": "0.0.0",
+    "dependencies": {
+        "http-server": "^0.12.3",
+        "xlsx": "^0.17.0"
+    }
+}
