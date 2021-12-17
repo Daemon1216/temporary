@@ -1,3 +1,4 @@
+// https://blog.csdn.net/k909397116/article/details/105628826
 function swap(arr, idxL, idxR) {
   var tmp = arr[idxL];
   arr[idxL] = arr[idxR];
@@ -14,17 +15,17 @@ function main() {
   console.log('排序后：', arr);
 }
 
-// 普通快排：算法原理：找到分界点位置，并把小于基准值的数交换至分界点左侧
+// 普通快排：算法原理：找到分界点位置，并把小于基准值的数交换至分界点左侧。一个指针做间隔用，一个指针做遍历用
 function quickSort1Way(arr, l, r) {
   if (l < r) {
     swap(arr, l, Math.floor(Math.random() * (r - l + 1)) + l); // 取随机数为基准值
     var eV = arr[l]; // 基准值
     // 数组分为 eV, < eV（[l, j]）, > eV（[j+1, i]） 三部分，令 i 为当前索引，j 为 <eV 和 >eV 的分界点
-    var i = l + 1;
     var j = l;
+    var i = j + 1;
     while(i <= r) {
       if (arr[i] < eV) {
-        swap(arr, i++, ++j); // ++j: j为分界点
+        swap(arr, i++, ++j); // ++j: j为分界点。++j即左子数组要先增加一位
       } else {
         i++;
       }
@@ -35,7 +36,7 @@ function quickSort1Way(arr, l, r) {
   }
 }
 
-// 双指针快排：算法原理：找一个基准值，把比基准值大的移到基准值左边，比基准值小的移到基准值右边，左右数组重复此操作。每轮结束时，需要找到下一轮的分组下标，把数组拆分。
+// 双指针快排：算法原理：找一个基准值，把比基准值大的移到基准值左边，比基准值小的移到基准值右边，左右数组重复此操作。每轮结束时，需要找到下一轮的分组下标，把数组拆分。双指针，交替向中间扫。
 function quickSort2Way(arr, l, r) {
   // 递归结束条件：左右下标相同
   if (l < r) {
@@ -57,7 +58,7 @@ function quickSort2Way(arr, l, r) {
         swap(arr, i, j);
       }
     }
-    swap(arr, l, i); // 每轮结束后，基准值移至中间，一定适用
+    // swap(arr, l, i); // 1. 每轮结束后，基准值移至中间，一定适用 2. 或者 arr[l] = base; 3. 对于上面写法，其实不需要移动基准位，只需要确定好左右子数组即可
     quickSort2Way(arr, l, i);
     quickSort2Way(arr, i + 1, r);
   }

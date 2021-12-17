@@ -51,7 +51,7 @@ function sortFun2(arr, l, r, mid) {
   while(j <= r) {
     tmpArr[k++] = arr[j++];
   }
-  for(var i = 0; i < tmpArr.length; i++) {
+  for(var i = 0; i <= r - l; i++) { // r - l又可写为 tmpArr.length
     arr[l + i] = tmpArr[i];
   }
 }
