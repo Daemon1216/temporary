@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+    var result = document.getElementById("result");
+    var file = document.getElementById("file");
+    const maxSize = 2 * 1024 * 1024; // 2M
+    const maxWidth = 1080;
+    const maxHeight = 1080;
+
+    //判断浏览器是否支持FileReader接口
+    if (typeof FileReader == 'undefined') {
+        result.InnerHTML = "<p>你的浏览器不支持FileReader接口！</p>";
+        //使选择控件不可操作
+        file.setAttribute("disabled", "disabled");
+    }
+
+    function readFile(file) {
+      return new Promise((resolve) => {
+          var reader = new FileReader();
+          //将文件以Data URL形式读入页面
+          reader.readAsDataURL(file);
+
+          reader.onload = function (e) {
+            resolve(e.target.result); // base64
+          }
+        })
+    }
+
+    function compress(base64) {
+      return new Promise((resolve) => {
+        // 通过img在canvas绘制压缩图片
+        const img = new Image();
+        img.onload = () => {
+
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+
+          const iw = img.width;
+          const ih = img.height;
+
+          resolve() // 把base64输出，在外面再包装一下
+
+        };
+        img.src = base64;
+      })
+    }
+
+    async function deal() {
+        //检验是否为图像文件
+        var file = document.getElementById("file").files[0];
+        if (!/image\/\w+/.test(file.type)) {
+            alert("看清楚，这个需要图片！");
+            return false;
+        }
+        var res = await readFile(file);
+        
+    }
+
+</script>
+<p>
+    <label>请选择一个文件：</label>
+    <input type="file" id="file"/>
+    <input type="button" value="读取图像" onclick="deal()"/>
+</p>
+<div id="result" name="result"></div>
+</body>
+</html>
